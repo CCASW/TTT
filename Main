@@ -1,0 +1,40 @@
+import java.util.Scanner;
+import java.util.Random;
+class TTT {
+  public static void main(String[] args) {
+    Scanner input=new Scanner(System.in);
+    Random gen=new Random();
+    System.out.println("Enter key: ");
+    int key=input.nextInt();
+    System.out.println("Enter number of players: ");
+    int N=input.nextInt();
+    int random=0;
+    int base=0;
+    if(key==0){
+      random=gen.nextInt(10);
+      key=random;
+    }else{
+      random=key/(int)Math.pow(10,(int)Math.log10(key));
+      base=key-random*(int)Math.pow(10,(int)Math.log10(key));
+    }
+    int temp=base;
+    int L=(int)Math.log10(base)+1;
+    int numT=0;
+    int numD=0;
+    while(temp>0){
+      if(temp%10==(int)Math.sqrt(random+2)) numT++;
+      if(temp%10==(int)Math.sqrt(random+1)) numD++;
+      temp/=10;
+    }
+    if(gen.nextDouble()<=(Math.max(Math.floor(.2d*N),1d)-numT)/(N-L+1)){
+      key=key*10+4-random;
+      System.out.println("You are a traitor! The next key is: "+key);
+    }else if(gen.nextDouble()<=(Math.floor(.15d)*N-numD)/(N-L+1)){
+      key=key*10+1-random;
+      System.out.println("You are a detective! The next key is: "+key);
+    }else{
+      key=key*10-random;
+      System.out.println("You are innocent! The next key is: "+key);
+    }
+  }
+}
